@@ -1,0 +1,63 @@
+class Solution {
+public:
+
+bool topological(unordered_map<int,vector<int>>&adj,int n,vector<int>indegree){
+
+    queue<int>q; // we know for topological sort queue is the use BFS
+
+    int count=0; // take the count=0;
+
+    for(int i=0;i<n;i++){ // simply run the loop for 0 to n-1 which is numCourses
+        
+        if(indegree[i]==0){ // if anyone have 0 indegree then push it into the queue
+
+            q.push(i); // here i is the element which is inserting into the queue
+            count++;
+        }
+    }
+
+    while(!q.empty()){
+
+        int u=q.front(); 
+
+        q.pop();
+
+        for(int& v:adj[u]){
+
+            indegree[v]--;
+
+            if(indegree[v]==0){
+
+                q.push(v);
+
+                count++;
+            }
+        }
+    }
+
+    if(count==n)return true;
+
+    return false;
+}
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+
+        // first we should make the graph 
+
+        unordered_map<int,vector<int>>adj; // with the adj is the adjacency list 
+
+        vector<int>indegree(numCourses,0); // simply follow the topological concept
+
+        for(auto & vec:prerequisites){ // traverse in the given and push it into the graph
+
+            int a=vec[0];
+
+            int b=vec[1];
+
+            adj[b].push_back(a);
+
+            indegree[a]++; // increase the indegree of the second first one 
+        }
+
+        return topological(adj,numCourses,indegree); // call the function 
+    }
+};
