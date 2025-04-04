@@ -1,0 +1,31 @@
+class Solution {
+public:
+
+int find(TreeNode* root){
+    if(root==NULL)return 0;
+
+    int l=find(root->left);
+    int r=find(root->right);
+
+    return 1+max(l,r);
+}
+
+TreeNode* lowest(TreeNode* root,int maxd,int depth){
+    if(root==NULL)return NULL;
+
+    if(maxd==depth){
+        return root;
+    }
+
+    TreeNode* l=lowest(root->left,maxd,depth+1);
+    TreeNode* r=lowest(root->right,maxd,depth+1);
+
+    if(l && r) return root;
+    return l ? l : r;
+}
+    TreeNode* lcaDeepestLeaves(TreeNode* root) {
+        int maxd=find(root);
+
+        return lowest(root,maxd,1);
+    }
+};
