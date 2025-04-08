@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        int cnt = 0;
+
+        while (true) {
+            unordered_map<int, int> mp;
+            bool hasDuplicate = false;
+
+          
+            for (int num : nums) {
+                mp[num]++;
+                if (mp[num] > 1) {
+                    hasDuplicate = true;
+                    break;
+                }
+            }
+
+            
+            if (!hasDuplicate) break;
+
+           
+            int removeCount = min(3, (int)nums.size());
+            nums.erase(nums.begin(), nums.begin() +removeCount);
+            cnt++;
+        }
+
+        return cnt;
+    }
+};
