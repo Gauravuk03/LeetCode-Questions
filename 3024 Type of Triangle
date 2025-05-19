@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string triangleType(vector<int>& nums) {
+        
+        int n=nums.size();
+
+        sort(nums.begin(),nums.end());
+
+        for(int i=0;i<n-1;i++){
+            if(nums[i]+nums[i+1]<=nums[i+2]) return "none";
+        }
+
+        unordered_map<int,int>mp;
+
+        bool e=false;
+        bool d=false;
+        bool no=false;
+
+        for(int i=0;i<n;i++){
+            mp[nums[i]]++;
+        }
+
+        for(auto a:mp){
+
+            if(a.second==3) e=true;
+             else if(a.second==2) d=true;
+        else no=true;
+        }
+
+        if(e)return "equilateral";
+        else if(d) return "isosceles";
+        else return "scalene";
+    }
+};
